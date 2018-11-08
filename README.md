@@ -1,4 +1,4 @@
-# add more cases match from following repo:
+# add more cases match from <Spark-JDBC-limit>
    use while(prev.child !=null)  to search for JDBCRelation
    
    and use reflection to replace the node other than re-create the whole tree!
