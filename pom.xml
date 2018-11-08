@@ -1,0 +1,162 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.nascent.snappydata</groupId>
+    <artifactId>spark-jdbc-limit</artifactId>
+    <packaging>jar</packaging>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <snappydata.version>1.0.2</snappydata.version>
+        <snappyspark.version>2.1.1.3</snappyspark.version>
+        <scala.version>2.11.8</scala.version>
+        <scala.binary.version>2.11</scala.binary.version>
+        <scope>provided</scope>
+    </properties>
+
+
+    <repositories>
+        <repository>
+            <id>aliyun</id>
+            <name>Nexus Release Repository</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-library</artifactId>
+            <version>${scala.version}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>io.snappydata</groupId>
+            <artifactId>snappydata-cluster_${scala.binary.version}</artifactId>
+            <version>${snappydata.version}</version>
+            <scope>${scope}</scope>
+            <exclusions>
+            	<exclusion>
+            		<groupId>org.apache.hadoop</groupId>
+      				<artifactId>hadoop-aws</artifactId>
+            	</exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-compiler</artifactId>
+            <version>${scala.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.5</version>
+        </dependency>
+        
+        <dependency>
+		    <groupId>io.snappydata</groupId>
+		    <artifactId>snappydata-core_${scala.binary.version}</artifactId>
+		    <version>1.0.1</version>
+		</dependency>
+		<dependency>
+		    <groupId>io.snappydata</groupId>
+		    <artifactId>snappy-spark-sql_${scala.binary.version}</artifactId>
+		    <version>${snappyspark.version}</version>
+		</dependency>
+
+    </dependencies>
+    <build>
+        <sourceDirectory>src/main/scala/</sourceDirectory>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.21.0</version>
+                <configuration>
+                    <includes>
+                        <include>**/*.java</include>
+                        <include>**/*.scala</include>
+                    </includes>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+
+
+            <plugin>
+                <groupId>org.scala-tools</groupId>
+                <artifactId>maven-scala-plugin</artifactId>
+                <version>2.15.2</version>
+                <configuration>
+                    <args>
+                        <arg>
+                            -g:vars
+                        </arg>
+                    </args>
+                    <verbose>true</verbose>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>scala-compile-first</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>scala-test-compile</id>
+                        <phase>process-test-resources</phase>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.6.1</version>
+                <configuration>
+                    <!--<compilerArgument>-parameters</compilerArgument>-->
+                    <compilerArgument>-g</compilerArgument>
+                    <verbose>true</verbose>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.1</version>
+                <configuration>
+                    <attach>true</attach>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+</project>
