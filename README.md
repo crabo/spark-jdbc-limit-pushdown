@@ -1,8 +1,11 @@
 # add more cases match from following repo:
    use while(prev.child !=null)  to search for JDBCRelation
+   
    and use reflection to replace the node other than re-create the whole tree!
    
-# spark-jdbc-limit   #https://raw.githubusercontent.com/lightcopy/spark-jdbc-limit/
+   
+# spark-jdbc-limit   
+#https://raw.githubusercontent.com/lightcopy/spark-jdbc-limit/
 Spark JDBC optimization rule to propagate limit to database
 
 Repository provides rule to push down `LocalLimit` to JDBC relation and add it to the executed
